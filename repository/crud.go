@@ -62,3 +62,17 @@ func CreatePR(repo, branch, title, body string) (string, error) {
 	return resp.URL, nil
 }
 
+// runQChat invokes `q chat` and returns the raw AI response.
+func RunQChat(prompt string) ([]byte, error) {
+	// “q chat” is the Amazon Q Developer CLI chat entrypoint :contentReference[oaicite:0]{index=0}
+	cmd := exec.Command("q", "chat", "--no-stream", "--message", prompt)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return nil, err
+	}
+	return out.Bytes(), nil
+}
+
+
