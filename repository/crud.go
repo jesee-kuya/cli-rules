@@ -75,4 +75,10 @@ func RunQChat(prompt string) ([]byte, error) {
 	return out.Bytes(), nil
 }
 
+func ExitOnErr(what string, err error) {
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error %s: %v\n", what, err)
+		os.Exit(1)
+	}
+}
 
