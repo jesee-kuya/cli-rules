@@ -17,3 +17,8 @@ func RunTests(path string) error {
 	return cmd.Run()
 }
 
+// runGitBranch creates or checks out the feature branch.
+func RunGitBranch(name string) error {
+	return exec.Command("git", "checkout", "-B", name).Run()
+}
+
