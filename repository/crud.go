@@ -82,3 +82,8 @@ func ExitOnErr(what string, err error) {
 	}
 }
 
+func Must(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
