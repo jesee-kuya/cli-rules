@@ -22,3 +22,8 @@ func RunGitBranch(name string) error {
 	return exec.Command("git", "checkout", "-B", name).Run()
 }
 
+// runGitAddAll stages all changes.
+func RunGitAddAll() error {
+	return exec.Command("git", "add", "-A").Run()
+}
+
