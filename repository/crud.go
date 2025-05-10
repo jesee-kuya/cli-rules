@@ -27,3 +27,14 @@ func RunGitAddAll() error {
 	return exec.Command("git", "add", "-A").Run()
 }
 
+// runGitCommit makes a commit.
+func RunGitCommit(msg string) error {
+	return exec.Command("git", "commit", "-m", msg).Run()
+}
+
+// runGitPush pushes branch to origin.
+func RunGitPush(branch string) error {
+	return exec.Command("git", "push", "--set-upstream", "origin", branch).Run()
+}
+
+/
