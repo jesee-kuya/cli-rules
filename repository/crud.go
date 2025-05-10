@@ -37,4 +37,28 @@ func RunGitPush(branch string) error {
 	return exec.Command("git", "push", "--set-upstream", "origin", branch).Run()
 }
 
-/
+// createPR uses GitHub CLI (gh) to open a PR.
+func CreatePR(repo, branch, title, body string) (string, error) {
+	cmd := exec.Command("gh", "pr", "create",
+		"--repo", repo,
+		"--head", branch,
+		"--title", title,
+		"--body", body,
+		"--json", "url",
+	)
+	var buf bytes.Buffer
+	cmd.Stdout = &buf
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return "", err
+	}
+	// gh returns JSON like { "url": "https://..." }
+	var resp struct {
+		URL string `json:"url"`
+	}
+	if err := json.Unmarshal(buf.Bytes(), &resp); err != nil {
+		return "", err
+	}
+	return resp.URL, nil
+}
+
